@@ -4,7 +4,7 @@
     "description": "A chat app written with React, Socket.io, and NextJS",
     "main": "index.js",
     "scripts": {
-        "dev": "next dev",
+        "dev": "node src/server/index.js",
         "build": "next build",
         "start": "next start"
     },
