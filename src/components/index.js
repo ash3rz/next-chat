@@ -1,88 +1,80 @@
-import {
-    Button,
-    makeStyles,
-    Paper,
-    TextField,
-    Typography
-} from "@material-ui/core";
-import { Send } from "@material-ui/icons";
-import React, { useEffect, useRef, useState } from "react";
+import Button from "@material-ui/core/Button";
+import Container from "@material-ui/core/Container";
+import { makeStyles, rgbToHex } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import React, { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
-    button: {
-        margin: theme.spacing(1),
-    },
-
-    chatBox: {
-        height: "70vh",
+    paper: {
+        marginTop: theme.spacing(8),
         display: "flex",
         flexDirection: "column",
+        alignItems: "center",
     },
-
-    chatLog: {
-        height: "100%",
-        overflow: "auto",
-    },
-
-    messageBox: {
-        marginTop: "auto",
-    },
-
-    messageField: {
-        maxWidth: "100%",
+    form: {
+        width: "100%", // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
     },
 }));
 
-function Chat(props) {
-    const { chatLog, onSend } = props;
+function getRandomColor() {
+    const rgbValue = () => Math.floor(Math.random() * 256);
+
+    return `rgb(${rgbValue()}, ${rgbValue()}, ${rgbValue()})`;
+}
+
+function SignIn(props) {
+    const { onSignIn } = props;
     const classes = useStyles();
-    const [message, setMessage] = useState("");
-    const bottomChat = useRef();
 
-    const updateMessage = (event) => {
-        setMessage(event.target.value);
+    const [name, setName] = useState("");
+    const onNameChange = (event) => setName(event.target.value);
+
+    const handleSignIn = () => {
+        const trimmedName = name.trim();
+
+        if (trimmedName) {
+            const color = rgbToHex(getRandomColor());
+            console.log("color was", color);
+            onSignIn(name, color);
+            setName("");
+        }
     };
-
-    const handleSend = () => {
-        onSend(message);
-        setMessage("");
-    };
-
-    useEffect(() => {
-        bottomChat?.current?.scrollIntoView({ behavior: "smooth" });
-    }, [chatLog]);
 
     return (
-        <Paper classes={{ root: classes.chatBox }}>
-            <Paper classes={{ root: classes.chatLog }}>
-                {chatLog.map((log, index) => (
-                    <Typography key={index}>{log}</Typography>
-                ))}
-                <div ref={bottomChat} />
-            </Paper>
-            <Paper classes={{ root: classes.messageBox }}>
-                <TextField
-                    classes={{ root: classes.messageField }}
-                    variant="outlined"
-                    label="Type a message"
-                    onChange={updateMessage}
-                    value={message}
-                    onKeyPress={(event) => {
-                        event.key === "Enter" && handleSend();
-                    }}
-                />
-                <Button
-                    variant="contained"
-                    color="primary"
-                    classes={{ root: classes.button }}
-                    endIcon={<Send />}
-                    onClick={handleSend}
-                >
-                    Send
-                </Button>
-            </Paper>
-        </Paper>
+        <Container component="main" maxWidth="xs">
+            <div className={classes.paper}>
+                <Typography variant="h5">Welcome to Next Chat!</Typography>
+                <Typography variant="h6">Choose a Nickname</Typography>
+                <div className={classes.form}>
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="nickname"
+                        label="Nickname"
+                        autoComplete="nickname"
+                        autoFocus
+                        onKeyPress={(event) => {
+                            event.key === "Enter" && handleSignIn();
+                        }}
+                        value={name}
+                        onChange={onNameChange}
+                    />
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSignIn}
+                    >
+                        Sign In
+                    </Button>
+                </div>
+            </div>
+        </Container>
     );
 }
 
-export default Chat;
+export default SignIn;

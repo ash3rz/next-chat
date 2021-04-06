@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import Chat from "../components/index";
+import Chat from "../components/chat";
 
 export function ChatStory() {
     const [chatLog, setChatLog] = useState([
-        "Hello",
-        "Here's my message",
-        "More message!",
+        { username: "Batman", message: "Hello!" },
+        { username: "Superman", message: "I can beat you up! LOL" },
+        { username: "Batman", message: ":(" },
     ]);
-    const onSend = (msg) => setChatLog([...chatLog, msg]);
+    const onSend = (msg) =>
+        setChatLog([...chatLog, { username: "Me", message: msg }]);
 
     return <Chat chatLog={chatLog} onSend={onSend} />;
 }

@@ -1,28 +1,17 @@
-import React, { useEffect, useState } from "react";
-import Chat from "../src/components/index";
+import React from "react";
+import { useRouter } from "next/router";
+import SignIn from "../src/components";
 
-import io from 'socket.io-client';
-const socket = io("http://localhost:3000");
+function SignInPage(props) {
+    const { socket } = props;
+    const router = useRouter();
 
-function Home() {
-    const [chatLog, setChatLog] = useState([]);
-
-    useEffect(() => {
-        socket.on("chat message", (message) => {
-            setChatLog([...chatLog, message])
-        })
-
-        return () => {
-            socket.off('chat message');
-          };
-    })
-
-    const onSend = (message) => {
-        socket.emit("chat message", message);
-        console.log("sent message");
+    const onSignIn = (name, color) => {
+        socket.emit("add user", {name, color});
+        router.push("/chat");
     };
 
-    return <Chat chatLog={chatLog} onSend={onSend}/>;
+    return <SignIn onSignIn={onSignIn}/>;
 }
 
-export default Home;
+export default SignInPage;
