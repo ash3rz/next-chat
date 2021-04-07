@@ -2,9 +2,9 @@
     "name": "next-chat",
     "version": "1.0.0",
     "description": "A chat app written with React, Socket.io, and NextJS",
-    "main": "index.js",
+    "main": "src/server/index.js",
     "scripts": {
-        "dev": "node src/server/index.js",
+        "dev": "nodemon --watch src/server/index.js",
         "build": "next build",
         "start": "next start",
         "storybook": "start-storybook -p 6006",
@@ -47,6 +47,7 @@
         "babel-loader": "^8.2.2",
         "eslint": "^7.23.0",
         "eslint-plugin-react": "^7.23.1",
+        "nodemon": "^2.0.7",
         "prettier": "^2.2.1"
     }
 }
