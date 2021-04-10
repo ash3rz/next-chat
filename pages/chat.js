@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {useQuery} from "react-query";
+import apiCall from "../src/apiCall";
 import Chat from "../src/components/Chat";
 
 function Home(props) {
@@ -9,11 +10,7 @@ function Home(props) {
 
     useQuery({
         queryKey: "users",
-        queryFn: () => {
-            return fetch(
-                "http://localhost:3000/api/users"
-            ).then((res) => res.json())
-        },
+        queryFn: () => apiCall("/api/users"),
         onSuccess: (resp) => setUsers(resp),
     })
 
