@@ -1,7 +1,5 @@
 import {
     Button,
-    ListItem,
-    ListItemText,
     makeStyles,
     Paper,
     TextField,
@@ -9,7 +7,7 @@ import {
     withStyles,
 } from "@material-ui/core";
 import { Send } from "@material-ui/icons";
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -66,13 +64,11 @@ function Chat(props) {
                     const Username = withStyles({
                         root: {
                             color: log.color,
-                        }
+                        },
                     })(Typography);
                     return (
                         <div key={index} className={classes.message}>
-                            <Username>
-                                {log.username}:&nbsp;
-                            </Username>
+                            <Username>{log.username}:&nbsp;</Username>
                             <Typography>{log.message}</Typography>
                         </div>
                     );
@@ -84,7 +80,7 @@ function Chat(props) {
                 <TextField
                     classes={{ root: classes.messageField }}
                     variant="outlined"
-                    label="Type a message"
+                    label="Message"
                     onChange={updateMessage}
                     value={message}
                     onKeyPress={(event) => {
