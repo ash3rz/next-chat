@@ -9,8 +9,11 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../src/theme";
 
-import io from 'socket.io-client';
+import io from "socket.io-client";
+import { QueryClient, QueryClientProvider } from "react-query";
 const socket = io("http://localhost:3000");
+
+const queryClient = new QueryClient();
 
 export default function MyApp(props) {
     const { Component, pageProps } = props;
@@ -33,9 +36,11 @@ export default function MyApp(props) {
                 />
             </Head>
             <ThemeProvider theme={theme}>
-                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                <CssBaseline />
-                <Component {...pageProps} socket={socket} />
+                <QueryClientProvider client={queryClient}>
+                    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                    <CssBaseline />
+                    <Component {...pageProps} socket={socket} />
+                </QueryClientProvider>
             </ThemeProvider>
         </React.Fragment>
     );

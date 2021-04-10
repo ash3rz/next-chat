@@ -9,6 +9,7 @@ const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
 
 let numUsers = 0;
+let users = [];
 
 io.on("connection", (socket) => {
     let addedUser = false;
@@ -26,6 +27,7 @@ io.on("connection", (socket) => {
         socket.username = data.name;
         socket.color = data.color;
         ++numUsers;
+        users.push({username: data.name})
         addedUser = true;
         socket.emit('login', {
           numUsers: numUsers
@@ -49,6 +51,10 @@ io.on("connection", (socket) => {
 });
 
 nextApp.prepare().then(() => {
+    app.get("/api/users", (req, res) => {
+        res.send(users);
+    })
+
     app.get("*", (req, res) => {
         return handle(req, res);
     });

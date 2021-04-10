@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from "react";
+import {useQuery} from "react-query";
 import Chat from "../src/components/Chat";
 
 function Home(props) {
     const { socket } = props;
     const [chatLog, setChatLog] = useState([]);
     const [users, setUsers] = useState([]);
+
+    useQuery({
+        queryKey: "users",
+        queryFn: () => {
+            return fetch(
+                "http://localhost:3000/api/users"
+            ).then((res) => res.json())
+        },
+        onSuccess: (resp) => setUsers(resp),
+    })
 
     useEffect(() => {
         socket.on("chat message", (data) => {
