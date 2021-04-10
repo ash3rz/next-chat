@@ -18,6 +18,16 @@ io.on("connection", (socket) => {
 
     socket.on("disconnect", () => {
         console.log("user disconnected");
+        if (addedUser) {
+            --numUsers;
+            users = users.filter((user) => user.username !== socket.username);
+      
+            // echo globally that this client has left
+            socket.broadcast.emit('user left', {
+              username: socket.username,
+              numUsers: numUsers
+            });
+          }
     });
 
     socket.on("add user", (data) => {

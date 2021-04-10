@@ -13,7 +13,7 @@ function ChatPage(props) {
         queryKey: "users",
         queryFn: () => apiCall("/api/users"),
         onSuccess: (resp) => setUsers(resp),
-    })
+    });
 
     useEffect(() => {
         socket.on("chat message", (data) => {
@@ -24,6 +24,16 @@ function ChatPage(props) {
             const message = `${data.username} joined the chat (${data.numUsers} total)`;
             setChatLog([...chatLog, { ...data, message }]);
             setUsers([...users, { username: data.username }]);
+        });
+
+        socket.on("user left", (data) => {
+            const message = `${data.username} left the chat (${data.numUsers} total)`;
+            setChatLog([...chatLog, { ...data, message }]);
+
+            const remainingUsers = users.filter(
+                (user) => user.username !== data.username
+            );
+            setUsers(remainingUsers);
         });
 
         return () => {
@@ -41,6 +51,6 @@ function ChatPage(props) {
 
 ChatPage.propTypes = {
     socket: PropTypes.object.isRequired, //socket.io client
-}
+};
 
 export default ChatPage;
