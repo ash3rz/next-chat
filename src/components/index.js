@@ -74,6 +74,7 @@ function SignIn(props) {
                         variant="contained"
                         color="primary"
                         onClick={handleSignIn}
+                        disabled={name.length === 0}
                     >
                         Sign In
                     </Button>
