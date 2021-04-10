@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import SignIn from "../src/components";
+import SignIn from "../src/components/SignIn";
 
 function SignInPage(props) {
     const { socket } = props;

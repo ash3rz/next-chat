@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Chat from "../src/components/chat";
+import Chat from "../src/components/Chat";
 
 function Home(props) {
     const { socket } = props;
