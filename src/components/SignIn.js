@@ -4,6 +4,7 @@ import { makeStyles, rgbToHex } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { Chat } from "@material-ui/icons";
+import PropTypes from "prop-types";
 import React, { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
@@ -85,3 +86,7 @@ function SignIn(props) {
 }
 
 export default SignIn;
+
+SignIn.propTypes = {
+    onSignIn: PropTypes.func.isRequired,
+};

@@ -6,6 +6,7 @@ import {
     Paper,
     TextField,
 } from "@material-ui/core";
+import PropTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
 import Users from "./Users";
 
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
     root: {
         display: "flex",
-    }
+    },
 }));
 
 function Chat(props) {
@@ -109,3 +110,9 @@ function Chat(props) {
 }
 
 export default Chat;
+
+Chat.propTypes = {
+    chatLog: PropTypes.array.isRequired,
+    users: PropTypes.array.isRequired,
+    onSend: PropTypes.func.isRequired,
+};

@@ -7,6 +7,7 @@ import {
     ListItemText,
     makeStyles,
 } from "@material-ui/core";
+import PropTypes from "prop-types";
 import React from "react";
 import UserAvatar from "./UserAvatar";
 
@@ -52,3 +53,7 @@ function Users(props) {
 }
 
 export default Users;
+
+Users.propTypes = {
+    users: PropTypes.array.isRequired,
+};

@@ -1,9 +1,10 @@
+import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import {useQuery} from "react-query";
+import { useQuery } from "react-query";
 import apiCall from "../src/apiCall";
 import Chat from "../src/components/Chat";
 
-function Home(props) {
+function ChatPage(props) {
     const { socket } = props;
     const [chatLog, setChatLog] = useState([]);
     const [users, setUsers] = useState([]);
@@ -38,4 +39,8 @@ function Home(props) {
     return <Chat chatLog={chatLog} users={users} onSend={onSend} />;
 }
 
-export default Home;
+ChatPage.propTypes = {
+    socket: PropTypes.object.isRequired, //socket.io client
+}
+
+export default ChatPage;

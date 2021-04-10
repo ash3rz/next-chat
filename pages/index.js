@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import SignIn from "../src/components/SignIn";
+import PropTypes from "prop-types";
 
 function SignInPage(props) {
     const { socket } = props;
@@ -15,3 +16,7 @@ function SignInPage(props) {
 }
 
 export default SignInPage;
+
+SignInPage.propTypes = {
+    socket: PropTypes.object.isRequired, // socket.io client
+}

@@ -1,4 +1,5 @@
 import { MD5 } from "crypto-js";
+import PropTypes from "prop-types";
 import React from "react";
 
 function UserAvatar(props) {
@@ -6,8 +7,12 @@ function UserAvatar(props) {
 
     const hash = MD5(name);
     const gravatarUrl = `https://www.gravatar.com/avatar/${hash}?s=45&d=robohash`;
-    
+
     return <img src={gravatarUrl} alt="avatar" />;
 }
 
 export default UserAvatar;
+
+UserAvatar.propTypes = {
+    name: PropTypes.string.isRequired, // nickname for user
+};
