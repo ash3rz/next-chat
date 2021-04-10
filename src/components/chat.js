@@ -1,12 +1,11 @@
 import {
-    Button,
+    List,
+    ListItem,
+    ListItemText,
     makeStyles,
     Paper,
-    TextField,
-    Typography,
-    withStyles,
+    TextField
 } from "@material-ui/core";
-import { Send } from "@material-ui/icons";
 import React, { useEffect, useRef, useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
@@ -15,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     chatBox: {
-        height: "70vh",
+        height: "80vh",
         display: "flex",
         flexDirection: "column",
     },
@@ -25,16 +24,20 @@ const useStyles = makeStyles((theme) => ({
         overflow: "auto",
     },
 
+    listItem: {
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2),
+        paddingTop: theme.spacing(1),
+        paddingBottom: 0,
+    },
+
     message: {
         display: "flex",
     },
 
     messageBox: {
+        paddingTop: theme.spacing(2),
         marginTop: "auto",
-    },
-
-    messageField: {
-        maxWidth: "100%",
     },
 }));
 
@@ -49,8 +52,10 @@ function Chat(props) {
     };
 
     const handleSend = () => {
-        onSend(message);
-        setMessage("");
+        if (message.length > 0) {
+            onSend(message);
+            setMessage("");
+        }
     };
 
     useEffect(() => {
@@ -58,27 +63,29 @@ function Chat(props) {
     }, [chatLog]);
 
     return (
-        <Paper classes={{ root: classes.chatBox }}>
+        <div className={classes.chatBox}>
             <Paper classes={{ root: classes.chatLog }}>
-                {chatLog.map((log, index) => {
-                    const Username = withStyles({
-                        root: {
-                            color: log.color,
-                        },
-                    })(Typography);
-                    return (
-                        <div key={index} className={classes.message}>
-                            <Username>{log.username}:&nbsp;</Username>
-                            <Typography>{log.message}</Typography>
-                        </div>
-                    );
-                })}
-
-                <div ref={bottomChat} />
+                <List>
+                    {chatLog.map((log, index) => (
+                        <ListItem
+                            key={index}
+                            classes={{ root: classes.listItem }}
+                        >
+                            <ListItemText
+                                primary={log.username}
+                                primaryTypographyProps={{
+                                    style: { color: log.color },
+                                }}
+                                secondary={log.message}
+                            />
+                        </ListItem>
+                    ))}
+                    <div ref={bottomChat} />
+                </List>
             </Paper>
-            <Paper classes={{ root: classes.messageBox }}>
+            <div className={classes.messageBox}>
                 <TextField
-                    classes={{ root: classes.messageField }}
+                    fullWidth
                     variant="outlined"
                     label="Message"
                     onChange={updateMessage}
@@ -87,17 +94,8 @@ function Chat(props) {
                         event.key === "Enter" && handleSend();
                     }}
                 />
-                <Button
-                    variant="contained"
-                    color="primary"
-                    classes={{ root: classes.button }}
-                    endIcon={<Send />}
-                    onClick={handleSend}
-                >
-                    Send
-                </Button>
-            </Paper>
-        </Paper>
+            </div>
+        </div>
     );
 }
 
