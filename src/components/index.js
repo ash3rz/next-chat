@@ -3,6 +3,7 @@ import Container from "@material-ui/core/Container";
 import { makeStyles, rgbToHex } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import { Chat } from "@material-ui/icons";
 import React, { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
@@ -45,7 +46,12 @@ function SignIn(props) {
     return (
         <Container component="main" maxWidth="xs">
             <div className={classes.paper}>
-                <Typography variant="h5">Welcome to Next Chat!</Typography>
+                <div>
+                    <Chat color="secondary" fontSize="large" />
+                </div>
+                <Typography variant="h5" gutterBottom>
+                    Welcome to Next Chat!
+                </Typography>
                 <Typography variant="h6">Choose a Nickname</Typography>
                 <div className={classes.form}>
                     <TextField
