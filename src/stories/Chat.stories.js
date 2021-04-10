@@ -6,6 +6,13 @@ export function ChatStory() {
     const supermanColor = "#9F4347";
     const myColor = "#5D9377";
 
+    const users = [
+        { username: "Batman" },
+        {
+            username: "Superman",
+        },
+    ];
+
     const [chatLog, setChatLog] = useState([
         { username: "Batman", message: "Hello!", color: batmanColor },
         {
@@ -21,7 +28,7 @@ export function ChatStory() {
             { username: "Me", message: msg, color: myColor },
         ]);
 
-    return <Chat chatLog={chatLog} onSend={onSend} />;
+    return <Chat chatLog={chatLog} users={users} onSend={onSend} />;
 }
 
 export default {

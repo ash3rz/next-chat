@@ -4,9 +4,10 @@ import {
     ListItemText,
     makeStyles,
     Paper,
-    TextField
+    TextField,
 } from "@material-ui/core";
 import React, { useEffect, useRef, useState } from "react";
+import Users from "./Users";
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -17,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
         height: "80vh",
         display: "flex",
         flexDirection: "column",
+        flexGrow: 1,
     },
 
     chatLog: {
@@ -39,10 +41,14 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: theme.spacing(2),
         marginTop: "auto",
     },
+
+    root: {
+        display: "flex",
+    }
 }));
 
 function Chat(props) {
-    const { chatLog, onSend } = props;
+    const { chatLog, users, onSend } = props;
     const classes = useStyles();
     const [message, setMessage] = useState("");
     const bottomChat = useRef();
@@ -63,37 +69,40 @@ function Chat(props) {
     }, [chatLog]);
 
     return (
-        <div className={classes.chatBox}>
-            <Paper classes={{ root: classes.chatLog }}>
-                <List>
-                    {chatLog.map((log, index) => (
-                        <ListItem
-                            key={index}
-                            classes={{ root: classes.listItem }}
-                        >
-                            <ListItemText
-                                primary={log.username}
-                                primaryTypographyProps={{
-                                    style: { color: log.color },
-                                }}
-                                secondary={log.message}
-                            />
-                        </ListItem>
-                    ))}
-                    <div ref={bottomChat} />
-                </List>
-            </Paper>
-            <div className={classes.messageBox}>
-                <TextField
-                    fullWidth
-                    variant="outlined"
-                    label="Message"
-                    onChange={updateMessage}
-                    value={message}
-                    onKeyPress={(event) => {
-                        event.key === "Enter" && handleSend();
-                    }}
-                />
+        <div className={classes.root}>
+            <Users users={users} />
+            <div className={classes.chatBox}>
+                <Paper classes={{ root: classes.chatLog }}>
+                    <List>
+                        {chatLog.map((log, index) => (
+                            <ListItem
+                                key={index}
+                                classes={{ root: classes.listItem }}
+                            >
+                                <ListItemText
+                                    primary={log.username}
+                                    primaryTypographyProps={{
+                                        style: { color: log.color },
+                                    }}
+                                    secondary={log.message}
+                                />
+                            </ListItem>
+                        ))}
+                        <div ref={bottomChat} />
+                    </List>
+                </Paper>
+                <div className={classes.messageBox}>
+                    <TextField
+                        fullWidth
+                        variant="outlined"
+                        label="Message"
+                        onChange={updateMessage}
+                        value={message}
+                        onKeyPress={(event) => {
+                            event.key === "Enter" && handleSend();
+                        }}
+                    />
+                </div>
             </div>
         </div>
     );
