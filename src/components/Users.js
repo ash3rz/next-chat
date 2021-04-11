@@ -1,11 +1,10 @@
 import {
-    Avatar,
     Drawer,
     List,
     ListItem,
     ListItemAvatar,
     ListItemText,
-    makeStyles,
+    makeStyles
 } from "@material-ui/core";
 import PropTypes from "prop-types";
 import React from "react";
@@ -37,12 +36,13 @@ function Users(props) {
             }}
         >
             <List>
-                {users?.map(({ username }, index) => (
+                {users?.map(({ username, isTyping }, index) => (
                     <ListItem key={index}>
                         <ListItemAvatar>
-                            <Avatar>
-                                <UserAvatar name={username} />
-                            </Avatar>
+                            <UserAvatar
+                                username={username}
+                                isTyping={isTyping}
+                            />
                         </ListItemAvatar>
                         <ListItemText primary={username} />
                     </ListItem>
