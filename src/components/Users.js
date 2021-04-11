@@ -37,8 +37,8 @@ function Users(props) {
             }}
         >
             <List>
-                {users?.map(({ username }) => (
-                    <ListItem key={username}>
+                {users?.map(({ username }, index) => (
+                    <ListItem key={index}>
                         <ListItemAvatar>
                             <Avatar>
                                 <UserAvatar name={username} />
