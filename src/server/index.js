@@ -17,17 +17,17 @@ io.on("connection", (socket) => {
     console.log("a user connected");
 
     socket.on("disconnect", () => {
-        console.log("user disconnected");
+        console.log(`user ${socket.username} disconnected`);
         if (addedUser) {
             --numUsers;
             users = users.filter((user) => user.username !== socket.username);
-      
+
             // echo globally that this client has left
-            socket.broadcast.emit('user left', {
-              username: socket.username,
-              numUsers: numUsers
+            socket.broadcast.emit("user left", {
+                username: socket.username,
+                numUsers: numUsers,
             });
-          }
+        }
     });
 
     socket.on("add user", (data) => {
@@ -37,19 +37,19 @@ io.on("connection", (socket) => {
         socket.username = data.name;
         socket.color = data.color;
         ++numUsers;
-        users.push({username: data.name})
+        users.push({ username: data.name });
         addedUser = true;
-        socket.emit('login', {
-          numUsers: numUsers
+        socket.emit("login", {
+            numUsers: numUsers,
         });
-        
+
         // echo globally (all clients) that a person has connected
-        socket.broadcast.emit('user joined', {
-          username: socket.username,
-          color: socket.color,
-          numUsers: numUsers,
+        socket.broadcast.emit("user joined", {
+            username: socket.username,
+            color: socket.color,
+            numUsers: numUsers,
         });
-    })
+    });
 
     socket.on("chat message", (msg) => {
         io.emit("chat message", {
@@ -58,12 +58,25 @@ io.on("connection", (socket) => {
             message: msg,
         });
     });
+
+    socket.on("user typing", (data) => {
+        socket.broadcast.emit("user typing", {
+            username: socket.username,
+            time: data.time,
+        });
+    });
+
+    socket.on("stop typing", () => {
+        socket.broadcast.emit("stop typing", {
+            username: socket.username,
+        });
+    });
 });
 
 nextApp.prepare().then(() => {
     app.get("/api/users", (req, res) => {
         res.send(users);
-    })
+    });
 
     app.get("*", (req, res) => {
         return handle(req, res);
