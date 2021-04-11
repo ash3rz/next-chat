@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Chat from "../components/Chat";
+import ChatRoom from "../components/ChatRoom";
 
-export function ChatStory() {
+export function ChatRoomStory() {
     const batmanColor = "#353745";
     const supermanColor = "#9F4347";
     const myColor = "#5D9377";
@@ -28,10 +28,10 @@ export function ChatStory() {
             { username: "Me", message: msg, color: myColor },
         ]);
 
-    return <Chat chatLog={chatLog} users={users} onSend={onSend} />;
+    return <ChatRoom chatLog={chatLog} users={users} onSend={onSend} />;
 }
 
 export default {
     title: "Chat",
-    component: ChatStory,
+    component: ChatRoomStory,
 };

@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import apiCall from "../src/apiCall";
-import Chat from "../src/components/Chat";
+import ChatRoom from "../src/components/ChatRoom";
 
 function ChatPage(props) {
     const { socket } = props;
@@ -46,7 +46,7 @@ function ChatPage(props) {
         console.log("sent message");
     };
 
-    return <Chat chatLog={chatLog} users={users} onSend={onSend} />;
+    return <ChatRoom chatLog={chatLog} users={users} onSend={onSend} />;
 }
 
 ChatPage.propTypes = {
