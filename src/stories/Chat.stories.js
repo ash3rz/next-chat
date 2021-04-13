@@ -6,29 +6,36 @@ export function ChatRoomStory() {
     const supermanColor = "#9F4347";
     const myColor = "#5D9377";
 
-    const users = [
-        { username: "Batman" },
-        {
-            username: "Superman",
-        },
-    ];
-
     const [chatLog, setChatLog] = useState([
-        { username: "Batman", message: "Hello!", color: batmanColor },
+        { name: "Batman", message: "Hello!", color: batmanColor },
         {
-            username: "Superman",
+            name: "Superman",
             message: "I can beat you up! LOL",
             color: supermanColor,
         },
-        { username: "Batman", message: ":(", color: batmanColor },
+        { name: "Batman", message: ":(", color: batmanColor },
     ]);
-    const onSend = (msg) =>
-        setChatLog([
-            ...chatLog,
-            { username: "Me", message: msg, color: myColor },
-        ]);
 
-    return <ChatRoom chatLog={chatLog} users={users} onSend={onSend} />;
+    const [users, setUsers] = useState([
+        { name: "Batman" }, { name: "Superman" }, { name: "Me" }
+    ])
+
+    const onSend = (msg) =>
+        setChatLog([...chatLog, { name: "Me", message: msg, color: myColor }]);
+
+    const onUpdateTyping = (isTyping) => {
+        const updatedUsers = users.map((user) => user.name === "Me" ? {...user, isTyping: isTyping} : user);
+        setUsers(updatedUsers);
+    };
+
+    return (
+        <ChatRoom
+            chatLog={chatLog}
+            users={users}
+            onSend={onSend}
+            onUpdateTyping={onUpdateTyping}
+        />
+    );
 }
 
 export default {
