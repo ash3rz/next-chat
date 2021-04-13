@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 function ChatRoom(props) {
-    const { chatLog, users, onSend } = props;
+    const { chatLog, users, onSend, onUpdateTyping } = props;
     const classes = useStyles();
 
     return (
@@ -27,7 +27,7 @@ function ChatRoom(props) {
             <Users users={users} />
             <div className={classes.chatBox}>
                 <ChatLog chatLog={chatLog} />
-                <ChatInput onSend={onSend} />
+                <ChatInput onSend={onSend} onUpdateTyping={onUpdateTyping} />
             </div>
         </div>
     );
@@ -39,4 +39,5 @@ ChatRoom.propTypes = {
     chatLog: PropTypes.array.isRequired,
     users: PropTypes.array.isRequired,
     onSend: PropTypes.func.isRequired,
+    onUpdateTyping: PropTypes.func.isRequired,
 };

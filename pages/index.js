@@ -49,11 +49,33 @@ function Home(props) {
             setUsers(remainingUsers);
         });
 
+        socket.on("user typing", (data) => {
+            const { name } = data;
+
+            const updatedUsers = users.map((user) => {
+                return user.name === name ? { ...user, isTyping: true } : user;
+            });
+
+            setUsers(updatedUsers);
+        });
+
+        socket.on("stop typing", (data) => {
+            const { name } = data;
+
+            const updatedUsers = users.map((user) => {
+                return user.name === name ? { ...user, isTyping: false } : user;
+            });
+
+            setUsers(updatedUsers);
+        });
+
         return () => {
             socket.off("login");
             socket.off("chat message");
             socket.off("user joined");
             socket.off("user left");
+            socket.off("user typing");
+            socket.off("stop typing");
         };
     });
 
@@ -67,13 +89,22 @@ function Home(props) {
         setSignedIn(true);
     };
 
+    const onUpdateTyping = (typing) => {
+        typing ? socket.emit("user typing") : socket.emit("stop typing");
+    };
+
     if (!signedIn) {
         return <SignIn onSignIn={onSignIn} />;
     }
 
     return (
         <Grow in={!!signedIn}>
-            <ChatRoom chatLog={chatLog} users={users} onSend={onSend} />
+            <ChatRoom
+                chatLog={chatLog}
+                users={users}
+                onSend={onSend}
+                onUpdateTyping={onUpdateTyping}
+            />
         </Grow>
     );
 }

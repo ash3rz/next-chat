@@ -59,10 +59,9 @@ io.on("connection", (socket) => {
         });
     });
 
-    socket.on("user typing", (data) => {
+    socket.on("user typing", () => {
         socket.broadcast.emit("user typing", {
             name: socket.name,
-            time: data.time,
         });
     });
 
