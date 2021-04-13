@@ -24,6 +24,11 @@ function Home(props) {
     });
 
     useEffect(() => {
+        socket.on("login", (data) => {
+            const message = `Welcome to Next chat. ${data.numUsers} active`;
+            setChatLog([...chatLog, { message }]);
+        });
+
         socket.on("chat message", (data) => {
             setChatLog([...chatLog, data]);
         });
@@ -45,7 +50,10 @@ function Home(props) {
         });
 
         return () => {
+            socket.off("login");
             socket.off("chat message");
+            socket.off("user joined");
+            socket.off("user left");
         };
     });
 
