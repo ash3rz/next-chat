@@ -36,15 +36,15 @@ function Users(props) {
             }}
         >
             <List>
-                {users?.map(({ username, isTyping }, index) => (
+                {users?.map(({ name, isTyping }, index) => (
                     <ListItem key={index}>
                         <ListItemAvatar>
                             <UserAvatar
-                                username={username}
+                                name={name}
                                 isTyping={isTyping}
                             />
                         </ListItemAvatar>
-                        <ListItemText primary={username} />
+                        <ListItemText primary={name} />
                     </ListItem>
                 ))}
             </List>

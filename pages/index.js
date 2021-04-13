@@ -10,21 +10,16 @@ function Home(props) {
     const { socket } = props;
 
     // For sign in view
-    const [user, setUser] = useState(null);
+    const [signedIn, setSignedIn] = useState(false);
 
     // For chat view
     const [chatLog, setChatLog] = useState([]);
     const [users, setUsers] = useState([]);
 
-    const onSignIn = (name, color) => {
-        socket.emit("add user", { name, color });
-        setUser(name);
-    };
-
     useQuery({
         queryKey: "users",
         queryFn: () => apiCall("/api/users"),
-        enabled: !!user,
+        enabled: !!signedIn,
         onSuccess: (resp) => setUsers(resp),
     });
 
@@ -34,17 +29,17 @@ function Home(props) {
         });
 
         socket.on("user joined", (data) => {
-            const message = `${data.username} joined the chat (${data.numUsers} total)`;
+            const message = `${data.name} joined the chat (${data.numUsers} total)`;
             setChatLog([...chatLog, { ...data, message }]);
-            setUsers([...users, { username: data.username }]);
+            setUsers([...users, { name: data.name }]);
         });
 
         socket.on("user left", (data) => {
-            const message = `${data.username} left the chat (${data.numUsers} total)`;
+            const message = `${data.name} left the chat (${data.numUsers} total)`;
             setChatLog([...chatLog, { ...data, message }]);
 
             const remainingUsers = users.filter(
-                (user) => user.username !== data.username
+                (user) => user.name !== data.name
             );
             setUsers(remainingUsers);
         });
@@ -59,12 +54,17 @@ function Home(props) {
         console.log("sent message");
     };
 
-    if (!user) {
+    const onSignIn = (name, color) => {
+        socket.emit("add user", { name, color });
+        setSignedIn(true);
+    };
+
+    if (!signedIn) {
         return <SignIn onSignIn={onSignIn} />;
     }
 
     return (
-        <Grow in={!!user}>
+        <Grow in={!!signedIn}>
             <ChatRoom chatLog={chatLog} users={users} onSend={onSend} />
         </Grow>
     );

@@ -34,17 +34,23 @@ function ChatLog(props) {
     return (
         <Paper classes={{ root: classes.chatLog }}>
             <List>
-                {chatLog.map((log, index) => (
-                    <ListItem key={index} classes={{ root: classes.listItem }}>
-                        <ListItemText
-                            primary={log.username}
-                            primaryTypographyProps={{
-                                style: { color: log.color },
-                            }}
-                            secondary={log.message}
-                        />
-                    </ListItem>
-                ))}
+                {chatLog.map((log, index) => {
+                    const { name, color, message } = log;
+                    return (
+                        <ListItem
+                            key={index}
+                            classes={{ root: classes.listItem }}
+                        >
+                            <ListItemText
+                                primary={name}
+                                primaryTypographyProps={{
+                                    style: { color },
+                                }}
+                                secondary={message}
+                            />
+                        </ListItem>
+                    );
+                })}
                 <div ref={bottomChat} />
             </List>
         </Paper>

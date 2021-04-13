@@ -17,14 +17,14 @@ io.on("connection", (socket) => {
     console.log("a user connected");
 
     socket.on("disconnect", () => {
-        console.log(`user ${socket.username} disconnected`);
+        console.log(`user ${socket.name} disconnected`);
         if (addedUser) {
             --numUsers;
-            users = users.filter((user) => user.username !== socket.username);
+            users = users.filter((user) => user.name !== socket.name);
 
             // echo globally that this client has left
             socket.broadcast.emit("user left", {
-                username: socket.username,
+                name: socket.name,
                 numUsers: numUsers,
             });
         }
@@ -33,11 +33,11 @@ io.on("connection", (socket) => {
     socket.on("add user", (data) => {
         if (addedUser) return;
 
-        // we store the username in the socket session for this client
-        socket.username = data.name;
+        // we store the name in the socket session for this client
+        socket.name = data.name;
         socket.color = data.color;
         ++numUsers;
-        users.push({ username: data.name });
+        users.push({ name: data.name });
         addedUser = true;
         socket.emit("login", {
             numUsers: numUsers,
@@ -45,7 +45,7 @@ io.on("connection", (socket) => {
 
         // echo globally (all clients) that a person has connected
         socket.broadcast.emit("user joined", {
-            username: socket.username,
+            name: socket.name,
             color: socket.color,
             numUsers: numUsers,
         });
@@ -53,7 +53,7 @@ io.on("connection", (socket) => {
 
     socket.on("chat message", (msg) => {
         io.emit("chat message", {
-            username: socket.username,
+            name: socket.name,
             color: socket.color,
             message: msg,
         });
@@ -61,14 +61,14 @@ io.on("connection", (socket) => {
 
     socket.on("user typing", (data) => {
         socket.broadcast.emit("user typing", {
-            username: socket.username,
+            name: socket.name,
             time: data.time,
         });
     });
 
     socket.on("stop typing", () => {
         socket.broadcast.emit("stop typing", {
-            username: socket.username,
+            name: socket.name,
         });
     });
 });

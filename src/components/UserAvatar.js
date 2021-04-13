@@ -5,13 +5,13 @@ import TypingBadge from "./TypingBadge";
 import UserImg from "./UserImg";
 
 function UserAvatar(props) {
-    const { username, isTyping } = props;
+    const { name, isTyping } = props;
 
     if (isTyping) {
         return (
             <TypingBadge>
                 <Avatar>
-                    <UserImg name={username} />
+                    <UserImg name={name} />
                 </Avatar>
             </TypingBadge>
         );
@@ -19,7 +19,7 @@ function UserAvatar(props) {
 
     return (
         <Avatar>
-            <UserImg name={username} />
+            <UserImg name={name} />
         </Avatar>
     );
 }
@@ -27,6 +27,6 @@ function UserAvatar(props) {
 export default UserAvatar;
 
 UserAvatar.propTypes = {
-    username: PropTypes.string.isRequired, // nickname for user
+    name: PropTypes.string.isRequired, // nickname for user
     isTyping: PropTypes.bool,
 };
