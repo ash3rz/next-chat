@@ -51,4 +51,4 @@ export default TypingBadge;
 
 TypingBadge.propTypes = {
     children: PropTypes.any.isRequired,
-}
+};

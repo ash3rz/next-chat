@@ -17,14 +17,18 @@ export function ChatRoomStory() {
     ]);
 
     const [users, setUsers] = useState([
-        { name: "Batman" }, { name: "Superman" }, { name: "Me" }
-    ])
+        { name: "Batman" },
+        { name: "Superman" },
+        { name: "Me" },
+    ]);
 
     const onSend = (msg) =>
         setChatLog([...chatLog, { name: "Me", message: msg, color: myColor }]);
 
     const onUpdateTyping = (isTyping) => {
-        const updatedUsers = users.map((user) => user.name === "Me" ? {...user, isTyping: isTyping} : user);
+        const updatedUsers = users.map((user) =>
+            user.name === "Me" ? { ...user, isTyping: isTyping } : user
+        );
         setUsers(updatedUsers);
     };
 

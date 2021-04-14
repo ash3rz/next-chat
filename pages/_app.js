@@ -50,4 +50,4 @@ export default function MyApp(props) {
 MyApp.propTypes = {
     Component: PropTypes.func.isRequired, // the component to render
     pageProps: PropTypes.object, // props for the page
-}
+};

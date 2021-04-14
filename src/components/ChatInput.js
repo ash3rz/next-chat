@@ -19,7 +19,7 @@ function ChatInput(props) {
 
     const updateMessage = (event) => {
         setMessage(event.target.value);
-        
+
         setTyping(true);
         clearTimeout(typingTimer);
         const timer = setTimeout(() => {
