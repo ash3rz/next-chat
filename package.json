@@ -7,7 +7,7 @@
         "dev": "nodemon --watch src/server/index.js",
         "build": "next build",
         "prettier": "prettier --write package.json '{src,pages}/**/*.js' --tab-width 4",
-        "start": "next start",
+        "start": "NODE_ENV=production node src/server/index.js",
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook"
     },
