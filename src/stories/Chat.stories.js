@@ -28,12 +28,15 @@ export function ChatRoomStory() {
         setUsers(updatedUsers);
     };
 
+    const onSignOut = () => console.log("Sign out");
+
     return (
         <ChatRoom
             chatLog={chatLog}
             users={users}
             onSend={onSend}
             onUpdateTyping={onUpdateTyping}
+            onSignOut={onSignOut}
         />
     );
 }

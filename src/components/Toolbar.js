@@ -1,5 +1,6 @@
 import {
     AppBar,
+    Button,
     IconButton,
     makeStyles,
     Toolbar as MuiToolbar,
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Toolbar(props) {
-    const { handleUsersExpanded, usersExpanded } = props;
+    const { handleUsersExpanded, usersExpanded, onSignOut } = props;
     const classes = useStyles();
     return (
         <AppBar
@@ -64,6 +65,9 @@ function Toolbar(props) {
                 <Typography className={classes.title}>
                     Welcome to Next Chat!
                 </Typography>
+                <Button color="inherit" onClick={onSignOut}>
+                    Sign Out
+                </Button>
             </MuiToolbar>
         </AppBar>
     );
@@ -72,6 +76,7 @@ function Toolbar(props) {
 export default Toolbar;
 
 Toolbar.propTypes = {
+    onSignOut: PropTypes.func.isRequired,
     handleUsersExpanded: PropTypes.func.isRequired,
     usersExpanded: PropTypes.bool.isRequired,
 };

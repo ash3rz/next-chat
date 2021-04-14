@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import SignIn from "../src/components/SignIn";
 import PropTypes from "prop-types";
-import { useQuery } from "react-query";
+import { useQueryClient, useQuery } from "react-query";
 import apiCall from "../src/apiCall";
 import ChatRoom from "../src/components/ChatRoom";
 import { Grow } from "@material-ui/core";
 
 function Home(props) {
     const { socket } = props;
+    const queryClient = useQueryClient();
 
     // For sign in view
     const [signedIn, setSignedIn] = useState(false);
@@ -16,8 +17,10 @@ function Home(props) {
     const [chatLog, setChatLog] = useState([]);
     const [users, setUsers] = useState([]);
 
+    const usersQueryKey = ["users", signedIn];
+
     useQuery({
-        queryKey: "users",
+        queryKey: usersQueryKey,
         queryFn: () => apiCall("/api/users"),
         enabled: !!signedIn,
         onSuccess: (resp) => setUsers(resp),
@@ -27,6 +30,8 @@ function Home(props) {
         socket.on("login", (data) => {
             const message = `Welcome to Next chat. ${data.numUsers} active`;
             setChatLog([...chatLog, { message }]);
+
+            queryClient.invalidateQueries(usersQueryKey);
         });
 
         socket.on("chat message", (data) => {
@@ -85,12 +90,19 @@ function Home(props) {
     };
 
     const onSignIn = (name, color) => {
+        socket.connect();
         socket.emit("add user", { name, color });
+
         setSignedIn(true);
     };
 
     const onUpdateTyping = (typing) => {
         typing ? socket.emit("user typing") : socket.emit("stop typing");
+    };
+
+    const onSignOut = () => {
+        socket.disconnect();
+        setSignedIn(false);
     };
 
     if (!signedIn) {
@@ -104,6 +116,7 @@ function Home(props) {
                 users={users}
                 onSend={onSend}
                 onUpdateTyping={onUpdateTyping}
+                onSignOut={onSignOut}
             />
         </Grow>
     );

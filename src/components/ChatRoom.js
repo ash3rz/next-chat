@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ChatRoom(props) {
-    const { chatLog, users, onSend, onUpdateTyping } = props;
+    const { chatLog, users, onSend, onUpdateTyping, onSignOut } = props;
     const classes = useStyles();
 
     const [usersExpanded, setUsersExpanded] = useState(true);
@@ -37,6 +37,7 @@ function ChatRoom(props) {
             <Toolbar
                 usersExpanded={usersExpanded}
                 handleUsersExpanded={handleUsersExpanded}
+                onSignOut={onSignOut}
             />
             <Users
                 users={users}
@@ -59,4 +60,5 @@ ChatRoom.propTypes = {
     users: PropTypes.array.isRequired,
     onSend: PropTypes.func.isRequired,
     onUpdateTyping: PropTypes.func.isRequired,
+    onSignOut: PropTypes.func.isRequired,
 };
