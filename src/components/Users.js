@@ -54,6 +54,12 @@ function Users(props) {
     const { users, expanded, handleUsersMini } = props;
     const classes = useStyles();
 
+    const sortedUsers = users.sort((a, b) => {
+        const aName = a?.name?.toLowerCase();
+        const bName = b?.name?.toLowerCase();
+        return aName < bName ? -1 : aName > bName ? 1 : 0;
+    });
+
     return (
         <Drawer
             variant="permanent"
@@ -75,7 +81,7 @@ function Users(props) {
             </div>
             <Divider />
             <List>
-                {users?.map(({ name, isTyping }, index) => (
+                {sortedUsers?.map(({ name, isTyping }, index) => (
                     <ListItem key={index}>
                         <ListItemAvatar>
                             <UserAvatar name={name} isTyping={isTyping} />
