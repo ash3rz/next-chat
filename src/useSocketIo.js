@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import apiCall from "./apiCall";
 
+const MAX_CHAT_LOG_MSGS = 100;
+
 function useSocketIo(socket) {
     const queryClient = useQueryClient();
 
@@ -17,27 +19,31 @@ function useSocketIo(socket) {
         onSuccess: (resp) => setUsers(resp),
     });
 
+    const addChatMessage = (message) => {
+        setChatLog([...chatLog, message].slice(-MAX_CHAT_LOG_MSGS));
+    };
+
     useEffect(() => {
         socket.on("login", (data) => {
             const message = `Welcome to Next chat. ${data.numUsers} active`;
-            setChatLog([...chatLog, { message }]);
+            addChatMessage({ message });
 
             queryClient.invalidateQueries(usersQueryKey);
         });
 
         socket.on("chat message", (data) => {
-            setChatLog([...chatLog, data]);
+            addChatMessage(data);
         });
 
         socket.on("user joined", (data) => {
             const message = `${data.name} joined the chat (${data.numUsers} total)`;
-            setChatLog([...chatLog, { ...data, message }]);
+            addChatMessage({ ...data, message });
             setUsers([...users, { name: data.name }]);
         });
 
         socket.on("user left", (data) => {
             const message = `${data.name} left the chat (${data.numUsers} total)`;
-            setChatLog([...chatLog, { ...data, message }]);
+            addChatMessage({ ...data, message });
 
             const remainingUsers = users.filter(
                 (user) => user.name !== data.name
