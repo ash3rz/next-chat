@@ -5,6 +5,9 @@ import React, { useEffect, useState } from "react";
 const useStyles = makeStyles((theme) => ({
     chatInput: {
         paddingTop: theme.spacing(2),
+        paddingLeft: theme.spacing(1),
+        paddingRight: theme.spacing(1),
+        paddingBottom: theme.spacing(2),
         marginTop: "auto",
     },
 }));

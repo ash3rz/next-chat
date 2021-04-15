@@ -8,7 +8,6 @@ import Users from "./Users";
 
 const useStyles = makeStyles((theme) => ({
     chatBox: {
-        height: "80vh",
         display: "flex",
         flexDirection: "column",
         flexGrow: 1,
@@ -21,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
     root: {
         display: "flex",
+        height: "100vh",
     },
 }));
 

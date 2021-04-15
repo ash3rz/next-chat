@@ -45,41 +45,44 @@ function SignIn(props) {
     };
 
     return (
-        <Container component="main" maxWidth="xs">
-            <div className={classes.paper}>
-                <div>
-                    <Chat color="secondary" fontSize="large" />
-                </div>
-                <Typography variant="h5" gutterBottom>
-                    Welcome to Next Chat!
-                </Typography>
-                <Typography variant="h6">Choose a Nickname</Typography>
-                <div className={classes.form}>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="nickname"
-                        label="Nickname"
-                        autoComplete="nickname"
-                        autoFocus
-                        onKeyPress={(event) => {
-                            event.key === "Enter" && handleSignIn();
-                        }}
-                        value={name}
-                        onChange={onNameChange}
-                    />
-                    <Button
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        onClick={handleSignIn}
-                        disabled={name.length === 0}
-                    >
-                        Sign In
-                    </Button>
-                </div>
+        <Container
+            component="main"
+            maxWidth="xs"
+            classes={{ root: classes.paper }}
+        >
+            <img
+                src="https://robohash.org/Next-Chat?set=set1&size=100x100"
+                alt="Next Chat"
+            />
+            <Typography variant="h5" gutterBottom>
+                Welcome to Next Chat!
+            </Typography>
+            <Typography variant="h6">Choose a Nickname</Typography>
+            <div className={classes.form}>
+                <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="nickname"
+                    label="Nickname"
+                    autoComplete="nickname"
+                    autoFocus
+                    onKeyPress={(event) => {
+                        event.key === "Enter" && handleSignIn();
+                    }}
+                    value={name}
+                    onChange={onNameChange}
+                />
+                <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSignIn}
+                    disabled={name.length === 0}
+                >
+                    Sign In
+                </Button>
             </div>
         </Container>
     );

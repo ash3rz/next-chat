@@ -10,6 +10,8 @@ import React, { useEffect, useRef } from "react";
 
 const useStyles = makeStyles((theme) => ({
     chatLog: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
         height: "100%",
         overflow: "auto",
     },
@@ -32,7 +34,7 @@ function ChatLog(props) {
     }, [chatLog]);
 
     return (
-        <Paper classes={{ root: classes.chatLog }}>
+        <Paper elevation={2} classes={{ root: classes.chatLog }}>
             <List>
                 {chatLog.map((log, index) => {
                     const { name, color, message } = log;
