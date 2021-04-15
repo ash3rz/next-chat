@@ -12,6 +12,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const MAX_MSG_CHAR_LENGTH = 250;
+
 function ChatInput(props) {
     const { onSend, onUpdateTyping } = props;
     const [message, setMessage] = useState("");
@@ -21,7 +23,7 @@ function ChatInput(props) {
     const classes = useStyles();
 
     const updateMessage = (event) => {
-        setMessage(event.target.value);
+        setMessage(event.target.value.substring(0, MAX_MSG_CHAR_LENGTH));
 
         setTyping(true);
         clearTimeout(typingTimer);
@@ -49,6 +51,8 @@ function ChatInput(props) {
         <div className={classes.chatInput}>
             <TextField
                 fullWidth
+                multiline
+                rowsMax={3}
                 variant="outlined"
                 label="Message"
                 onChange={updateMessage}
