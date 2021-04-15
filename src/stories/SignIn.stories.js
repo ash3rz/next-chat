@@ -7,6 +7,6 @@ export function SignInStory() {
 }
 
 export default {
-    title: "Chat",
+    title: "Sign In",
     component: SignInStory,
 };
