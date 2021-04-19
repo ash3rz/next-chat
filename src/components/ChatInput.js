@@ -51,8 +51,6 @@ function ChatInput(props) {
         <div className={classes.chatInput}>
             <TextField
                 fullWidth
-                multiline
-                rowsMax={3}
                 variant="outlined"
                 label="Message"
                 onChange={updateMessage}

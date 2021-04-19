@@ -10,3 +10,7 @@ export default {
     title: "Sign In",
     component: SignInStory,
 };
+
+SignInStory.parameters = {
+    backgrounds: { default: "paper" },
+};

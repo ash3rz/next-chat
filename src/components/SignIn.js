@@ -21,6 +21,20 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
     },
 
+    marginTop: {
+        marginTop: theme.spacing(3),
+    },
+
+    preview: {
+        marginTop: theme.spacing(3),
+        display: "flex",
+        justifyContent: "space-between",
+    },
+
+    previewText: {
+        marginTop: theme.spacing(1),
+    },
+
     form: {
         width: "100%", // Fix IE 11 issue.
         marginTop: theme.spacing(1),
@@ -31,7 +45,7 @@ function SignIn(props) {
     const { onSignIn } = props;
 
     const [name, setName] = useState("Next Chatter");
-    const [color, setColor] = useState("#000");
+    const [color, setColor] = useState("#FFF");
     const [popperAnchor, setPopperAnchor] = React.useState(null);
 
     const classes = useStyles({ color });
@@ -82,18 +96,26 @@ function SignIn(props) {
                     onChange={onNameChange}
                 />
 
-                <Typography>Preview</Typography>
+                <div className={classes.preview}>
+                    <Typography classes={{ root: classes.previewText }}>
+                        Preview
+                    </Typography>
+                    <Button
+                        onClick={openPopper}
+                        startIcon={
+                            <Palette classes={{ root: classes.palette }} />
+                        }
+                    >
+                        Pick Name Color
+                    </Button>
+                </div>
+
                 <ChatMessage
                     name={name}
                     color={color}
                     message="Hello everybody!"
                 />
-                <Button
-                    onClick={openPopper}
-                    endIcon={<Palette classes={{ root: classes.palette }} />}
-                >
-                    Change Name Color
-                </Button>
+
                 <Popover
                     open={Boolean(popperAnchor)}
                     anchorEl={popperAnchor}
@@ -114,6 +136,7 @@ function SignIn(props) {
                 </Popover>
 
                 <Button
+                    classes={{ root: classes.marginTop }}
                     fullWidth
                     variant="contained"
                     color="primary"

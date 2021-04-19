@@ -18,4 +18,17 @@ export const parameters = {
             date: /Date$/,
         },
     },
+    backgrounds: {
+        default: "default",
+        values: [
+            {
+                name: "default",
+                value: theme.palette.background.default,
+            },
+            {
+                name: "paper",
+                value: theme.palette.background.paper,
+            }
+        ]
+    }
 };

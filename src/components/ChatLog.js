@@ -5,8 +5,6 @@ import ChatMessage from "./ChatMessage";
 
 const useStyles = makeStyles((theme) => ({
     chatLog: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
         height: "100%",
         overflow: "auto",
     },
