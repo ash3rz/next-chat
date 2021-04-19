@@ -1,44 +1,49 @@
+import { Popover, TextField } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
-import { makeStyles, rgbToHex } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { Chat } from "@material-ui/icons";
+import { Palette } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
+import { TwitterPicker } from "react-color";
+import ChatMessage from "./ChatMessage";
 
 const useStyles = makeStyles((theme) => ({
+    palette: {
+        color: (props) => props.color,
+    },
+
     paper: {
         marginTop: theme.spacing(8),
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
     },
+
     form: {
         width: "100%", // Fix IE 11 issue.
         marginTop: theme.spacing(1),
     },
 }));
 
-function getRandomColor() {
-    const rgbValue = () => Math.floor(Math.random() * 256);
-
-    return `rgb(${rgbValue()}, ${rgbValue()}, ${rgbValue()})`;
-}
-
 function SignIn(props) {
     const { onSignIn } = props;
-    const classes = useStyles();
 
-    const [name, setName] = useState("");
+    const [name, setName] = useState("Next Chatter");
+    const [color, setColor] = useState("#000");
+    const [popperAnchor, setPopperAnchor] = React.useState(null);
+
+    const classes = useStyles({ color });
+
     const onNameChange = (event) => setName(event.target.value);
+    const openPopper = (event) => setPopperAnchor(event.currentTarget);
+    const closePopper = () => setPopperAnchor(null);
 
     const handleSignIn = () => {
         const trimmedName = name.trim();
 
         if (trimmedName) {
-            const color = rgbToHex(getRandomColor());
-            console.log("color was", color);
             onSignIn(name, color);
             setName("");
         }
@@ -54,11 +59,13 @@ function SignIn(props) {
                 src="https://robohash.org/Next-Chat?set=set1&size=100x100"
                 alt="Next Chat"
             />
-            <Typography variant="h5" gutterBottom>
-                Welcome to Next Chat!
+
+            <Typography variant="h5" gutterBottom paragraph>
+                <b>Welcome to Next Chat!</b>
             </Typography>
-            <Typography variant="h6">Choose a Nickname</Typography>
+
             <div className={classes.form}>
+                <Typography>Choose a Nickname</Typography>
                 <TextField
                     variant="outlined"
                     margin="normal"
@@ -74,6 +81,38 @@ function SignIn(props) {
                     value={name}
                     onChange={onNameChange}
                 />
+
+                <Typography>Preview</Typography>
+                <ChatMessage
+                    name={name}
+                    color={color}
+                    message="Hello everybody!"
+                />
+                <Button
+                    onClick={openPopper}
+                    endIcon={<Palette classes={{ root: classes.palette }} />}
+                >
+                    Change Name Color
+                </Button>
+                <Popover
+                    open={Boolean(popperAnchor)}
+                    anchorEl={popperAnchor}
+                    onClose={closePopper}
+                    anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "center",
+                    }}
+                    transformOrigin={{
+                        vertical: "top",
+                        horizontal: "center",
+                    }}
+                >
+                    <TwitterPicker
+                        color={color}
+                        onChange={(color) => setColor(color.hex)}
+                    />
+                </Popover>
+
                 <Button
                     fullWidth
                     variant="contained"

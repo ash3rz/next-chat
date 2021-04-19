@@ -1,12 +1,7 @@
-import {
-    List,
-    ListItem,
-    ListItemText,
-    makeStyles,
-    Paper,
-} from "@material-ui/core";
+import { List, makeStyles, Paper } from "@material-ui/core";
 import PropTypes from "prop-types";
 import React, { useEffect, useRef } from "react";
+import ChatMessage from "./ChatMessage";
 
 const useStyles = makeStyles((theme) => ({
     chatLog: {
@@ -14,13 +9,6 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(1),
         height: "100%",
         overflow: "auto",
-    },
-
-    listItem: {
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2),
-        paddingTop: theme.spacing(1),
-        paddingBottom: 0,
     },
 }));
 
@@ -37,21 +25,7 @@ function ChatLog(props) {
         <Paper elevation={2} classes={{ root: classes.chatLog }}>
             <List>
                 {chatLog.map((log, index) => {
-                    const { name, color, message } = log;
-                    return (
-                        <ListItem
-                            key={index}
-                            classes={{ root: classes.listItem }}
-                        >
-                            <ListItemText
-                                primary={name}
-                                primaryTypographyProps={{
-                                    style: { color },
-                                }}
-                                secondary={message}
-                            />
-                        </ListItem>
-                    );
+                    return <ChatMessage key={index} {...log} />;
                 })}
                 <div ref={bottomChat} />
             </List>

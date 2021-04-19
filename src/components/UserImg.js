@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core";
+import { Person } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -13,6 +14,10 @@ function UserImg(props) {
     const { name } = props;
     const classes = useStyles();
 
+    if (!name) {
+        return <Person color="primary" />
+    }
+
     const setNum = "set1";
     const size = "50";
 
@@ -24,5 +29,5 @@ function UserImg(props) {
 export default UserImg;
 
 UserImg.propTypes = {
-    name: PropTypes.string.isRequired, // nickname for user
+    name: PropTypes.string, // nickname for user
 };
